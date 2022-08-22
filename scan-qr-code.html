@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Amazon QR Code Label Maker</title>
+        <meta name="description" content="Tool to create a shipping label from Amazon QR Codes">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+        
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <div class="container">
+            <div class="row">
+                <div class="title-01">
+                    <h1>Amazon QR Label Maker</h1>
+                    <p>Scan the QR code to create a shipping label for Amazon.</p>
+                </div>
+                <div class="row">
+                    <div class="body-01">
+                        <!-- large text input -->
+                        <input type="text" class="form-control" id="qr-code" placeholder="Enter Amazon QR Code">
+                        <br>
+                        <button type="button" onclick="main();" class="btn btn-primary" id="submit-button">Generate Label</button>
+                        <br>
+                        <button type="button" onclick="window.open('http://labelary.com/viewer.html','_blank')">Open Labelary</button>
+                        <br>
+                    </div>
+                </div>
+                <hr>
+                <div class="instructions">
+                    <h2>Instructions</h2>
+                        <ol id="instructions">
+                            <li>Enter or scan the Amazon QR Code in the text box above.</li>
+                            <li>Click the Generate Label button.</li>
+                            <li>The label will be copied to your clipboard.</li>
+                            <li>Click the Open Labelary button to open Labelar in a new tab.</li>
+                            <li>Paste the label into the Labelary viewer.</li>
+                            <li>Click redrew to get the new label.</li>
+                            <li>Download the label as a PDF.</li>
+                        </ol>
+                    </div>
+            </div>
+            <script src="index.js" async defer></script>
+    </body>
+</html>
