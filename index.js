@@ -76,14 +76,7 @@ function parse(qrInput) {
   ^FO40,160^A0,30^FDSHIP^FS
   ^FO60,190^A0,30^FDTO:^FS
   ^FX Name
-  ^FO120,160^A0,30^FD${shipToName}^FS
-  ^FX Street Address
-  ^FO120,190^A0,30^FD${shipToAddress}^FS
-  ^FX Suite
-  ^FO120,220^A0,30^FD${shipToSuite}^FS
-  
-  ^FX City, State, Zip
-  ^FO120,250^A0,30^FD${shipToCity}, ${shipToState} ${shipToZip}^FS
+  ^FO120,160^A0,70^FDAMAZON RETURNS^FS
 
   ^FX Separator
   ^FO30,300^GB740,3,3^FS
@@ -98,8 +91,8 @@ function parse(qrInput) {
   ^FO100,1070^BCN,75,Y,Y^FD${referenceID}^FS
 
   ^FX Amazon QR Code
-  ^FO30,305^A0,16^FDAmazon QR Code^FS
-  ^FO30,320^BQN,2,4,A^FDMA,${qrInput}^FS
+  ^FO30,305^A0,25^FDAmazon QR Code^FS
+  ^FO30,325^BQN,2,4,A^FDMA,${qrInput}^FS
 
   ^FX Tracking Number QR Code
   ^FO400,305^A0,25^FDTracking Number QR Code^FS
@@ -139,6 +132,17 @@ function parse(qrInput) {
 
   ^XZ`
   console.log(zpl);
+
+  // Ship old ship to code
+  // ^FX Name
+  // ^FO120,160^A0,30^FD${shipToName}^FS
+  // ^FX Street Address
+  // ^FO120,190^A0,30^FD${shipToAddress}^FS
+  // ^FX Suite
+  // ^FO120,220^A0,30^FD${shipToSuite}^FS
+  
+  // ^FX City, State, Zip
+  // ^FO120,250^A0,30^FD${shipToCity}, ${shipToState} ${shipToZip}^FS
   
   return zpl;
 
