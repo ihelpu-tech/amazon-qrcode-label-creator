@@ -40,6 +40,7 @@
 		"@esbuild/darwin-arm64": "^0.17.5",
 		"@svelteuidev/composables": "^0.7.7",
 		"@svelteuidev/core": "^0.7.7",
+		"esbuild": "0.17.5",
 		"jsbarcode": "^3.11.5",
 		"jspdf": "^2.5.1",
 		"qrcode": "^1.5.1"
