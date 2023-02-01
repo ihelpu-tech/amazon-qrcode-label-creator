@@ -9,6 +9,10 @@ Simply scan the QR code on the return label and the label will be generated.
 
 Development versions of the app can be cloned and run locally.
 
+## Contributing
+Contributions are welcome. Please fork the repository and submit a pull request.
+The app is written with svelte kit. To run the app locally, clone the repository and run `npm install` and `npm run dev`.
+
 ## Docker
 *Docker rewrite coming soon*
 ## Privacy
