@@ -25,8 +25,6 @@
 	type bannerColor = '' | 'red' | 'green' | 'darkorange';
 	let bannerColor: bannerColor = '';
 
-	let BarcodeImgData: string;
-
 	function createBarcode(barcodeInputText: string) {
 		const barcodeOptions: Object = {
 			format: 'CODE128',
@@ -52,6 +50,9 @@
 
 	function createTheLabel() {
 		console.log('Starting new label creation');
+		// trim the input
+		qrInput = qrInput.trim();
+
 		// Log the value of the QR code
 		console.log(qrInput);
 
@@ -258,6 +259,7 @@
 			month: '2-digit',
 			day: '2-digit'
 		});
+		// Increase scan number by 1
 		scanNumber++;
 		doc.save(`AR-${dateReadable}-${scanNumber}.pdf`);
 
@@ -296,69 +298,82 @@
 </script>
 
 <!-- HTML -->
-<section id="banner" style="background-color: {bannerColor};">
+<section id="banner" style="background-color: {bannerColor}; display: block;">
 	<!-- Banner Area -->
 	{#if showBanner === true}
-		<div class="banner">
-			<p>{bannerMessage}</p>
-		</div>
+		<p>{bannerMessage}</p>
 	{/if}
 </section>
 
-<section id="Heading">
+<section class="Heading">
 	<!-- Tittle -->
-	<h1 class="title-01">Amazon QR Code Converter</h1>
+	<h1 id="title-01">Amazon QR Code Converter</h1>
 	<p>
 		Paste or scan your Amazon QR return code here. Compatible returns will be downloaded as a PDF
 		label.
 	</p>
+	<p>
+		This is an open source project designed by <a href="https://ihelpu.tech">iHelpU.Tech</a>.
+		You can contribute to the project by visiting the <a href="https://github.com/ihelpu-tech/amazon-qrcode-label-creator">GitHub</a> page.
+		<br>
+		Custom implementations are available for a fee. Contact us for more information.
+	</p>
 </section>
-<section id="User-input">
+<div>
 	<!-- User Info -->
-	<h2>Enter Your Shipping Info</h2>
-	<form>
-		<label for="name">Name</label>
-		<input type="text" name="name" id="name" bind:value={returnName} placeholder="Return Name" />
-		<br />
+	<h2>Return Shipping</h2>
+	<p>Please enter your return shipping information in case your package cannot be delivered.</p>
+	<form id="customer-info">
+		<div class="form-group">
+			<label for="name">Name</label>
+			<input type="text" name="name" id="name" bind:value={returnName} placeholder="Return Name" />
+		</div>
 
-		<label for="address">Address</label>
-		<input
-			type="text"
-			name="address"
-			id="address"
-			bind:value={returnAddress}
-			placeholder="Return Address"
-		/>
-		<br />
+		<div class="form-group">
+			<label for="address">Address</label>
+			<input
+				type="text"
+				name="address"
+				id="address"
+				bind:value={returnAddress}
+				placeholder="Return Address"
+			/>
+		</div>
 
-		<label for="suite">Suite</label>
-		<input
-			type="text"
-			name="suite"
-			id="suite"
-			bind:value={returnSuite}
-			placeholder="Suite (optional)"
-		/>
-		<br />
+		<div class="form-group">
+			<label for="suite">Suite</label>
+			<input
+				type="text"
+				name="suite"
+				id="suite"
+				bind:value={returnSuite}
+				placeholder="Suite (optional)"
+			/>
+		</div>
 
-		<label for="city">City</label>
-		<input type="text" name="city" id="city" bind:value={returnCity} placeholder="Return City" />
-		<br />
+		<div class="form-group">
+			<label for="city">City</label>
+			<input type="text" name="city" id="city" bind:value={returnCity} placeholder="Return City" />
+		</div>
 
-		<label for="state">State</label>
-		<input
-			type="text"
-			name="state"
-			id="state"
-			bind:value={returnState}
-			placeholder="Return State"
-		/>
-		<br />
+		<div class="form-group">
+			<label for="state">State</label>
+			<input
+				type="text"
+				name="state"
+				id="state"
+				bind:value={returnState}
+				placeholder="Return State"
+			/>
+		</div>
 
-		<label for="zip">ZIP</label>
-		<input type="text" name="zip" id="zip" bind:value={returnZip} placeholder="Return ZIP" />
-		<br />
-
+		<div class="form-group">
+			<label for="zip">ZIP</label>
+			<input type="text" name="zip" id="zip" bind:value={returnZip} placeholder="Return ZIP" />
+		</div>
+	</form>
+	<h3>Settings</h3>
+	<form id="checkboxes">
 		<label for="save-return">Save Return Info</label>
 		<input
 			type="checkbox"
@@ -378,26 +393,17 @@
 		<label for="auto-print">Auto Print after Scan</label>
 		<input type="checkbox" name="auto-print" id="auto-print-checkbox" bind:checked={autoPrint} />
 	</form>
-</section>
+</div>
 <br />
-<section id="qr-input">
+<div id="qr-input">
 	<!-- QR Code Input -->
 	<!-- svelte-ignore a11y-autofocus -->
 	<h2>Scan Code Here:</h2>
 	<!-- svelte-ignore a11y-autofocus -->
-	<input
-		style="
-			    width: 95%;
-				padding: auto;
-				margin: auto;
-    			margin: auto;
-    			text-align: center;
-   				 height: 100pt;
-				"
-		type="text"
+	<textarea
+		id="qr-code-input"
 		name="Enter QR Code"
-		id="qr-code"
-		autofocus
+		placeholder="Enter QR Code Here"
 		bind:value={qrInput}
 		on:keypress={(e) => {
 			if (e.key === 'Enter' && qrInput.length > 0) {
@@ -407,6 +413,7 @@
 	/>
 	<br />
 	<input
+		id="download-button"
 		type="submit"
 		value="Download Label"
 		on:click={() => {
@@ -415,18 +422,29 @@
 			}
 		}}
 	/>
-</section>
+</div>
 
 <section id="past-scans">
 	<!-- Previous scans -->
 	{#if previousScans.length > 0}
+		<!-- Seperating line -->
+		<hr />
 		<button on:click={() => (previousScans = [])}>Clear</button>
 		<h2>Previous Scans</h2>
-		{#each previousScans as scan}
-			<ul>
-				<li>{scan}</li>
-			</ul>
-		{/each}
+		<ul id="previous-scan-list">
+			{#each previousScans as scan}
+				<div class="previous-scan">
+					<li>{scan}</li>
+					<!-- copy scan list item -->
+					<button
+						on:click={() => {
+							navigator.clipboard.writeText(scan);
+							// errorMessage('Copied to clipboard');
+						}}>Copy</button
+					>
+				</div>
+			{/each}
+		</ul>
 	{/if}
 </section>
 
@@ -439,27 +457,17 @@
 <style>
 	/* Make sure the banner section is always 2em tall */
 	#banner {
+		display: block;
 		height: 2em;
 		text-align: center;
 		text-emphasis: bold;
 		color: white;
-		margin: auto;
+		margin: 1px;
 		padding: auto;
 		font-family: Arial, Helvetica, sans-serif;
 		font-size: 1.5rem;
 	}
-
-	button {
-		background-color: #4caf50;
-		color: white;
-		padding: 14px 20px;
-		margin: 8px 0;
-		border: none;
-		cursor: pointer;
-		width: 20%;
-	}
-
-	.title-01 {
+	#title-01 {
 		margin: auto;
 		width: 60%;
 		/* border: 3px solid #000000; */
@@ -469,10 +477,87 @@
 		font-weight: bold;
 		font-family: 'Roboto', sans-serif;
 	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		justify-self: center;
+		flex-wrap: wrap;
+		align-items: center;
+		font-family: 'Roboto', sans-serif;
+		margin: auto;
+		width: auto;
+	}
+
+	.previous-scan {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		flex-wrap: wrap;
+		align-items: center;
+		font-family: 'Roboto', sans-serif;
+		margin: .5em;
+		padding-top: .5em;
+		padding-bottom: .5em;
+		/* No bullet for li */
+		list-style-type: none;
+		border: 1px solid gray;
+	}
+	#previous-scan-list {
+		display: flex;
+		flex-direction: column;
+		padding-left: 0px;
+		margin: .5em;
+	}
+
+	#customer-info {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		flex-wrap: wrap;
+		align-items: center;
+		font-family: 'Roboto', sans-serif;
+		margin: auto;
+		width: auto;
+	}
+
+	#qr-code-input {
+		width: 95%;
+		height: 4em;
+		text-align: center;
+		word-wrap: break-word;
+		word-break: break-all;
+		font-size: 2em;
+		border: 1px solid gray;
+	}
+
+	#download-button {
+		background-color: #4caf50;
+		color: white;
+		padding: 14px 20px;
+		margin: 8px 0;
+		border: none;
+		cursor: pointer;
+	}
+
 	:global(body) {
 		width: 95%;
 		margin: auto;
 		text-align: center;
 		padding: auto;
+		font-family: 'Roboto', sans-serif;
+	}
+
+	/* form {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	} */
+
+	input[type='text'] {
+		width: 200px;
+		margin: 10px 0;
+		padding: 10px;
+		border: 1px solid gray;
 	}
 </style>

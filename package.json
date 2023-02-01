@@ -16,6 +16,8 @@
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/adapter-cloudflare": "^2.0.1",
+		"@sveltejs/adapter-node": "^1.1.4",
 		"@sveltejs/kit": "next",
 		"@types/jsbarcode": "^3.11.1",
 		"@types/qrcode": "^1.5.0",
