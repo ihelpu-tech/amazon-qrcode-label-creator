@@ -3,11 +3,13 @@
 Generates a label from the Amazon return QR codes. This allows you to take your package to any UPS authorized retailer, UPS Access Points, or any UPS drop-off location. 
 
 ## Usage
-The production version of the app is currently hosted at [qr.ihelpu.tech](https://qr.ihelpu.tech). It is currently free to use there with no account required.
+The production version of the app is currently hosted at [qr.ihelpu.tech](https://qr.ihelpu.tech). It is currently free to use with no account required.
 
-Simply scan the QR code on the return label and the label will be generated.
+Enter your return shipping details then scan the QR code or paste the text from an online converter and the label will be generated.
 
-Development versions of the app can be cloned and run locally.
+## Development
+This application is built with [SvelteKit](https://kit.svelte.dev). Contributions are welcome.
+To run locally, clone the repo and run `npm install` then `npm run dev`.
 
 ## Docker
 *Docker rewrite coming soon*
